@@ -15,26 +15,21 @@ public class Recipe implements Serializable {
     private Long id;
 
     @Column
-//    @NotNull
     private String name;
 
     @Column
     private Timestamp createdAt;
 
     @Column
-//    @NotNull
     private Boolean isVegetarian;
 
     @Column
-//    @NotNull
     private Integer forPeople;
 
     @Column
-//    @NotNull
     private String ingredients;
 
     @Column
-//    @NotNull
     private String cookingInstructions;
 
     public Long getId() {
