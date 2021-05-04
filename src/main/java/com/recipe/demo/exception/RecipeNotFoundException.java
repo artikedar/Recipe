@@ -2,9 +2,6 @@ package com.recipe.demo.exception;
 
 public class RecipeNotFoundException extends RuntimeException{
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
 
     private String source;
