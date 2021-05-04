@@ -39,6 +39,5 @@ public class ErrorDetails {
 	public void setRecoverable(boolean recoverable) {
 		this.recoverable = recoverable;
 	}
-	
-	
+
 }

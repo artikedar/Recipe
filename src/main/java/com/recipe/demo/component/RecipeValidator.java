@@ -10,6 +10,13 @@ import java.util.Objects;
 @Component
 public class RecipeValidator {
 
+    /**
+     * validates the recipe
+     * @param recipe
+     * @return
+     * returns true if recipe is valid
+     * throws InvalidInputException if the recipe is null or invalid
+     */
     public Boolean isValidInput(Recipe recipe) {
         if(Objects.isNull(recipe)) {
             throw new InvalidInputException(Constants.RECIPE_NOT_FOUND_MSG);

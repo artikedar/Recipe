@@ -9,4 +9,9 @@ public class Constants {
 	public static final String RECIPE_INSTRUCTIONS_NOT_NULL_MSG = "Recipe instructions is either invalid or empty";
 	public static final String RECIPE_VEGETARIAN_FLAG_NOT_NULL_MSG = "Recipe isVegetarian is either invalid or empty";
 	public static final String RECIPE_DOES_NOT_EXIST_MSG = "Recipe does not exist";
+
+	public static final String RECIPE_URL = "/recipe";
+	public static final String RECIPE_SAVED_MESSAGE = "Successfully saved recipe";
+	public static final String RECIPE_DELETED_MESSAGE = "Successfully deleted recipe: ";
+	public static final String RECIPE_UPDATED_MESSAGE = "Successfully updated recipe";
 }

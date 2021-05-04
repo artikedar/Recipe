@@ -9,14 +9,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
+
+import static com.recipe.demo.util.Constants.RECIPE_URL;
 
 @RestController
-@RequestMapping("/recipe")
+@RequestMapping(RECIPE_URL)
 public class RecipeController {
 
-    private RecipeService recipeService;
-    private RecipeValidator recipeValidator;
+    private final RecipeService recipeService;
+    private final RecipeValidator recipeValidator;
 
     @Autowired
     public RecipeController(RecipeService recipeService, RecipeValidator recipeValidator) {
@@ -24,23 +25,49 @@ public class RecipeController {
         this.recipeValidator = recipeValidator;
     }
 
+    /**
+     *
+     * @param recipe : recipe to be created
+     * @return
+     * Returns 201 for successful recipe creation
+     * Returns 400 for invalid recipe input
+     */
     @PostMapping
-    public ResponseEntity<String> createRecipe(@Valid @RequestBody Recipe recipe) {
+    public ResponseEntity createRecipe(@Valid @RequestBody Recipe recipe) {
         recipeValidator.isValidInput(recipe);
         return new ResponseEntity(recipeService.createRecipe(recipe), HttpStatus.CREATED);
     }
 
+    /**
+     *
+     * @param name : recipe name to be deleted
+     * @return
+     * Returns 202 for successful recipe deletion
+     * Returns 400 for invalid recipe name input
+     */
     @DeleteMapping
-    public ResponseEntity<String> deleteRecipe(@Valid @RequestBody String name) {
+    public ResponseEntity deleteRecipe(@Valid @RequestBody String name) {
         recipeValidator.validateRecipeName(name);
         return new ResponseEntity(recipeService.deleteRecipe(name), HttpStatus.ACCEPTED);
     }
 
+    /**
+     *
+     * @return
+     * Returns 200 for successful response
+     */
     @GetMapping
-    public ResponseEntity<List<Recipe>> viewAllRecipies() {
+    public ResponseEntity viewAllRecipes() {
         return new ResponseEntity(recipeService.getAllRecipes(), HttpStatus.OK);
     }
 
+    /**
+     *
+     * @param recipe
+     * @return
+     * Returns 204 for successful recipe update operation
+     * Returns 400 for invalid recipe input
+     */
     @PutMapping
     public ResponseEntity<String> updateRecipe(@Valid @RequestBody Recipe recipe) {
         recipeValidator.isValidInput(recipe);

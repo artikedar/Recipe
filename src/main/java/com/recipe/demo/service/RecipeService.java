@@ -12,41 +12,65 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Objects;
 
+import static com.recipe.demo.util.Constants.*;
+
 @Service
 public class RecipeService implements RecipeServiceInterface {
 
-    private RecipeRepository recipeRepository;
-//    private RecipeValidator recipeValidator;
+    private final RecipeRepository recipeRepository;
 
     @Autowired
-    public RecipeService(RecipeRepository recipeRepository/*, RecipeValidator recipeValidator*/) {
+    public RecipeService(RecipeRepository recipeRepository) {
         this.recipeRepository = recipeRepository;
-//        this.recipeValidator = recipeValidator;
     }
 
+    /**
+     *
+     * @param recipe
+     * @return
+     * returns RECIPE_SAVED_MESSAGE string on successful recipe save action
+     */
     @Override
     public String createRecipe(Recipe recipe) {
         recipeRepository.save(recipe);
-        return "Successfully saved recipe";
+        return RECIPE_SAVED_MESSAGE;
     }
 
+    /**
+     *
+     * @param name
+     * @return
+     * returns RECIPE_DELETED_MESSAGE string on successful recipe delete action
+     * throws RecipeNotFoundException if the recipe is not found in db
+     */
     @Override
     public String deleteRecipe(String name) {
-//        recipeValidator.validateRecipeName(name);
         Recipe recipe = recipeRepository.findByName(name);
         if (Objects.nonNull(recipe)) {
             recipeRepository.delete(recipe);
-            return "Successfully deleted recipe: " + name;
+            return RECIPE_DELETED_MESSAGE + name;
         } else {
             throw new RecipeNotFoundException(Constants.RECIPE_NOT_FOUND_MSG);
         }
     }
 
+    /**
+     *
+     * @return
+     * returns list of recipes available in the db
+     */
     @Override
     public List<Recipe> getAllRecipes() {
         return recipeRepository.findAll();
     }
 
+    /**
+     *
+     * @param recipe
+     * @return
+     * returns RECIPE_UPDATED_MESSAGE string on successful recipe update action
+     * throws RecipeDoesNotExistException if the recipe does not exists in db
+     */
     @Override
     @Transactional
     public String updateRecipe(Recipe recipe) {
@@ -54,8 +78,7 @@ public class RecipeService implements RecipeServiceInterface {
         if (!Objects.nonNull(existingRecipe)) {
             throw new RecipeDoesNotExistException(Constants.RECIPE_DOES_NOT_EXIST_MSG);
         }
-        Long id = existingRecipe.getId();
         recipeRepository.updateRecipe(recipe.getIngredients(), recipe.getCookingInstructions(), recipe.isVegetarian(), recipe.getForPeople(), existingRecipe.getId());
-        return "Successfully updated recipe";
+        return RECIPE_UPDATED_MESSAGE;
     }
 }
